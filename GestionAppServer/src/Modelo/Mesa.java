@@ -49,7 +49,7 @@ public class Mesa implements Cloneable, Serializable {
 
 	
 	public String getNombre_restaurante() {
-		return nombre_restaurante;
+		return this.nombre_restaurante;
 	}
 
 	public void setNombre_restaurante(String nombre_restaurante) {
@@ -82,7 +82,7 @@ public class Mesa implements Cloneable, Serializable {
 		if (this.nombre_restaurante == null) {
 			if (valueObject.getEstado() != null)
 				return (false);
-		} else if (!this.estado.equals(valueObject.getEstado())) {
+		} else if (!this.nombre_restaurante.equals(valueObject.getNombre_restaurante())) {
 			return (false);
 		}
 
@@ -108,7 +108,7 @@ public class Mesa implements Cloneable, Serializable {
 		if (this.estado != null)
 			cloned.setEstado(new String(this.estado));
 		if (this.nombre_restaurante != null)
-			cloned.setEstado(new String(this.nombre_restaurante));
+			cloned.setNombre_restaurante(new String(this.nombre_restaurante));
 		return cloned;
 	}
 	public String getDaogenVersion() {
