@@ -27,7 +27,7 @@ public class Menu implements Cloneable, Serializable {
 	}
 
 	public String getNombre_restaurante() {
-		return nombre_restaurante;
+		return this.nombre_restaurante;
 	}
 
 	public void setNombre_restaurante(String nombre_restaurante) {
