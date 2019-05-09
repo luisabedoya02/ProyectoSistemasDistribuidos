@@ -14,7 +14,7 @@ public class ControlUsuario {
 	private IUsuario iu = null;
 
 	public ControlUsuario() throws RemoteException, NotBoundException {
-		Registry r = LocateRegistry.getRegistry(10000);
+		Registry r = LocateRegistry.getRegistry("192.168.0.31",10000);
 		iu = (IUsuario) r.lookup("Usuario");
 	}
 

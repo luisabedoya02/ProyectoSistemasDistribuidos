@@ -14,7 +14,7 @@ public class ControlMenu {
 	private IMenu imenu = null;
 
 	public ControlMenu() throws RemoteException, NotBoundException {
-		Registry r = LocateRegistry.getRegistry(10000);
+		Registry r = LocateRegistry.getRegistry("192.168.0.31",10000);
 		imenu = (IMenu) r.lookup("Menu");
 	}
 
