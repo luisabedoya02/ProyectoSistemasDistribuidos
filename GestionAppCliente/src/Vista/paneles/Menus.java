@@ -59,7 +59,7 @@ public class Menus extends javax.swing.JPanel {
 		Object[] menus = new Object[modeloMenus.getColumnCount()];
 		for (Menu menu : listaMenus) {
 			menus[0] = menu.getId();		
-			menus[1] = menu.getId_restaurante();
+			menus[1] = menu.getNombre_restaurante();
 			modeloMenus.addRow(menus);
 		}
 		jTableMenus.setModel(modeloMenus);

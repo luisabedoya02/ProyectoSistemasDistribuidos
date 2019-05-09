@@ -54,7 +54,7 @@ public class Mesas extends javax.swing.JPanel {
 			mesas[0] = mesa.getId();
 			mesas[1] = mesa.getCodigo_mesa();
 			mesas[2] = mesa.getEstado();
-			mesas[3] = mesa.getId_restaurante();
+			mesas[3] = mesa.getNombre_restaurante();
 			modeloMesas.addRow(mesas);
 		}
 		jTableMesas.setModel(modeloMesas);
