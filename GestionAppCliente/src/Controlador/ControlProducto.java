@@ -14,7 +14,7 @@ public class ControlProducto {
 	private IProducto ip = null;
 
 	public ControlProducto() throws RemoteException, NotBoundException {
-		Registry r = LocateRegistry.getRegistry("192.168.0.31",10000);
+		Registry r = LocateRegistry.getRegistry(10000);
 		ip = (IProducto) r.lookup("Producto");
 	}
 
