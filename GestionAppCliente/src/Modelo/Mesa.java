@@ -82,7 +82,7 @@ public class Mesa implements Cloneable, Serializable {
 		if (this.nombre_restaurante == null) {
 			if (valueObject.getEstado() != null)
 				return (false);
-		} else if (!this.estado.equals(valueObject.getEstado())) {
+		} else if (!this.nombre_restaurante.equals(valueObject.getNombre_restaurante())) {
 			return (false);
 		}
 
