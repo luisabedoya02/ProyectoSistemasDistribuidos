@@ -102,7 +102,7 @@ public class Usuarios extends javax.swing.JPanel {
 			jTextFieldNombre.setText(nombre);
 			jTextFieldTelefono.setText(telefono);
 			jTextFieldEmail.setText(email);
-			jLabel2.setText(id);
+			jTextFieldId.setText(id);
 			// jComboBoxRestaurante.add;
 
 		}
@@ -117,6 +117,7 @@ public class Usuarios extends javax.swing.JPanel {
 		jLabel2 = new javax.swing.JLabel();
 		jLabel3 = new javax.swing.JLabel();
 		jLabel4 = new javax.swing.JLabel();
+		jTextFieldId = new javax.swing.JTextField();
 		jTextFieldNombre = new javax.swing.JTextField();
 		jTextFieldTelefono = new javax.swing.JTextField();
 		jTextFieldEmail = new javax.swing.JTextField();
@@ -144,7 +145,7 @@ public class Usuarios extends javax.swing.JPanel {
 		jLabel1.setText("Nombre");
 
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jLabel2.setText("Teléfono");
+		jLabel2.setText("Telï¿½fono");
 
 		jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel3.setText("E-Mail");
@@ -346,7 +347,7 @@ public class Usuarios extends javax.swing.JPanel {
 
 		int fila = JTableUsuarios.getSelectedRow();
 
-		String id2 = jLabel2.getText();
+		String id2 = jTextFieldId.getText();
 		//String id1 = JTableUsuarios.getValueAt(fila, 0).toString();
 		int id = Integer.parseInt(id2);
 		String documento = jTextFieldDocumento.getText();
@@ -407,5 +408,6 @@ public class Usuarios extends javax.swing.JPanel {
 	private javax.swing.JTextField jTextFieldTelefono;
 	private javax.swing.JTextField jTextFieldEmail;
 	private javax.swing.JTextField jTextFieldDocumento;
+	private javax.swing.JTextField jTextFieldId;
 	// End of variables declaration
 }
