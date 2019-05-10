@@ -27,6 +27,7 @@ public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
 		Mesa mesa = new Mesa(codigoMesa);
 		// crear los DAO a manipular
 		MesaDao mesaDao = new MesaDao();
+		
 
 		try {
 			mesaDao.load(getConnection(), mesa);
