@@ -51,13 +51,13 @@ public class MesaDao implements Serializable {
 		ResultSet result = null;
 
 		try {
-			sql = "INSERT INTO mesa ( id, codigo_mesa, estado, " + "id_restaurante) VALUES (?, ?, ?, ?) ";
+			sql = "INSERT INTO mesa ( id, codigo_mesa, estado, " + "nombre_restaurante) VALUES (?, ?, ?, ?) ";
 			stmt = conn.prepareStatement(sql);
 
 			stmt.setInt(1, valueObject.getId());
 			stmt.setString(2, valueObject.getCodigo_mesa());
 			stmt.setString(3, valueObject.getEstado());
-			stmt.setInt(4, valueObject.getId_restaurante());
+			stmt.setString(4, valueObject.getNombre_restaurante());
 
 			int rowcount = databaseUpdate(conn, stmt);
 			if (rowcount != 1) {
@@ -74,14 +74,14 @@ public class MesaDao implements Serializable {
 
 	public void save(Connection conn, Mesa valueObject) throws NotFoundException, SQLException {
 
-		String sql = "UPDATE mesa SET codigo_mesa = ?, estado = ?, id_restaurante = ? WHERE (id = ? ) ";
+		String sql = "UPDATE mesa SET codigo_mesa = ?, estado = ?, nombre_restaurante = ? WHERE (id = ? ) ";
 		PreparedStatement stmt = null;
 
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, valueObject.getCodigo_mesa());
 			stmt.setString(2, valueObject.getEstado());
-			stmt.setInt(3, valueObject.getId_restaurante());
+			stmt.setString(3, valueObject.getNombre_restaurante());
 
 			stmt.setInt(4, valueObject.getId());
 
@@ -190,11 +190,11 @@ public class MesaDao implements Serializable {
 			sql.append("AND estado LIKE '").append(valueObject.getEstado()).append("%' ");
 		}
 
-		if (valueObject.getId_restaurante() != 0) {
+		if (valueObject.getNombre_restaurante() != null) {
 			if (first) {
 				first = false;
 			}
-			sql.append("AND id_restaurante = ").append(valueObject.getId_restaurante()).append(" ");
+			sql.append("AND nombre_restaurante LIKE '").append(valueObject.getEstado()).append("%' ");
 		}
 
 		sql.append("ORDER BY id ASC ");
@@ -233,7 +233,7 @@ public class MesaDao implements Serializable {
 				valueObject.setId(result.getInt("id"));
 				valueObject.setCodigo_mesa(result.getString("codigo_mesa"));
 				valueObject.setEstado(result.getString("estado"));
-				valueObject.setId_restaurante(result.getInt("id_restaurante"));
+				valueObject.setNombre_restaurante(result.getString("nombre_restaurante"));;
 
 			} else {
 				// System.out.println("Mesa Object Not Found!");
@@ -261,7 +261,7 @@ public class MesaDao implements Serializable {
 				temp.setId(result.getInt("id"));
 				temp.setCodigo_mesa(result.getString("codigo_mesa"));
 				temp.setEstado(result.getString("estado"));
-				temp.setId_restaurante(result.getInt("id_restaurante"));
+				temp.setNombre_restaurante(result.getString("nombre_restaurante"));
 
 				searchResults.add(temp);
 			}
