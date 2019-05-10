@@ -17,6 +17,7 @@ public class Pedido_detalle implements Cloneable, Serializable {
 
 	public Pedido_detalle() {
 
+		
 	}
 
 	public Pedido_detalle(int idPedido) {
