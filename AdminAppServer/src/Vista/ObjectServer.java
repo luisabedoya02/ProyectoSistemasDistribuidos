@@ -18,6 +18,7 @@ public class ObjectServer {
 		Impl_ValoracionCliente implValoracionCliente = new Impl_ValoracionCliente();
 		
 		
+		
 		Registry r = LocateRegistry.createRegistry(10000);
 		r.rebind("Cliente", implCliente);
 		r.rebind("Mesa", implMesa);
