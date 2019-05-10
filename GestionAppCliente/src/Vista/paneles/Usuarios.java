@@ -5,6 +5,7 @@
  */
 package Vista.paneles;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControlMesa;
@@ -31,7 +33,7 @@ public class Usuarios extends javax.swing.JPanel {
 
 	public Usuarios() {
 		initComponents();
-		
+
 		setModeloTablaUsuarios();
 		try {
 			llenarListaUsuarios();
@@ -43,12 +45,12 @@ public class Usuarios extends javax.swing.JPanel {
 			e.printStackTrace();
 		}
 		setDatosUsuarios();
-		
+
 		setEventoMouseClicked(JTableUsuarios);
 	}
 
 	public void setModeloTablaUsuarios() {
-		String cabeceras[] = { "Documento","Nombre","Telefono", "E-mail","Rol" ,"Restaurante" };
+		String cabeceras[] = { "id", "Documento", "Nombre", "Telefono", "E-mail", "Rol", "Restaurante" };
 		modeloUsuarios.setColumnIdentifiers(cabeceras);
 		JTableUsuarios.setModel(modeloUsuarios);
 	}
@@ -61,50 +63,50 @@ public class Usuarios extends javax.swing.JPanel {
 	public void setDatosUsuarios() {
 		Object[] usuarios = new Object[modeloUsuarios.getColumnCount()];
 		for (Usuario usuario : listaUsuarios) {
-			usuarios[0] = usuario.getDocumento();
-			usuarios[1] = usuario.getNombre_completo();
-			usuarios[2] = usuario.getTelefono();
-			usuarios[3] = usuario.getEmail();
-			usuarios[4] = usuario.getNombre_rol();
-			usuarios[5] = usuario.getNombre_restaurante();
+			usuarios[0] = usuario.getId();
+			usuarios[1] = usuario.getDocumento();
+			usuarios[2] = usuario.getNombre_completo();
+			usuarios[3] = usuario.getTelefono();
+			usuarios[4] = usuario.getEmail();
+			usuarios[5] = usuario.getNombre_rol();
+			usuarios[6] = usuario.getNombre_restaurante();
 			modeloUsuarios.addRow(usuarios);
 		}
 		JTableUsuarios.setModel(modeloUsuarios);
 	}
-	
+
 	private void setEventoMouseClicked(JTable tbl) {
 		tbl.addMouseListener(new java.awt.event.MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				jTableUsuariosMouseClicked(e);				
+				jTableUsuariosMouseClicked(e);
 			}
 		});
 	}
-	
-	
 
 	private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {
 		int fila = JTableUsuarios.rowAtPoint(evt.getPoint());
 		if (fila < 0) {
 			JOptionPane.showMessageDialog(null, "Selecciona una fila");
 		} else {
-			String documento = JTableUsuarios.getValueAt(fila, 0).toString();
-			String nombre = JTableUsuarios.getValueAt(fila, 1).toString();
-			String telefono = JTableUsuarios.getValueAt(fila, 2).toString();
-			String email = JTableUsuarios.getValueAt(fila, 3).toString();
-			String rol = JTableUsuarios.getValueAt(fila, 3).toString();
-			String restaurante = JTableUsuarios.getValueAt(fila, 3).toString();
+			String id = JTableUsuarios.getValueAt(fila, 0).toString();
+			String documento = JTableUsuarios.getValueAt(fila, 1).toString();
+			String nombre = JTableUsuarios.getValueAt(fila, 2).toString();
+			String telefono = JTableUsuarios.getValueAt(fila, 3).toString();
+			String email = JTableUsuarios.getValueAt(fila, 4).toString();
+			String rol = JTableUsuarios.getValueAt(fila, 5).toString();
+			String restaurante = JTableUsuarios.getValueAt(fila, 6).toString();
 
 			jTextFieldDocumento.setText(documento);
 			jTextFieldNombre.setText(nombre);
 			jTextFieldTelefono.setText(telefono);
 			jTextFieldEmail.setText(email);
-			//jComboBoxRol.add;
-			
+			jLabel2.setText(id);
+			// jComboBoxRestaurante.add;
+
 		}
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -125,9 +127,9 @@ public class Usuarios extends javax.swing.JPanel {
 		jButtonGuardar = new javax.swing.JButton();
 		jButtonActualizar = new javax.swing.JButton();
 		jButtonEliminar = new javax.swing.JButton();
-		jComboBoxRol = new javax.swing.JComboBox<>();
-		jLabel5 = new javax.swing.JLabel();
 		jComboBoxRestaurante = new javax.swing.JComboBox<>();
+		jLabel5 = new javax.swing.JLabel();
+		jComboBoxRol = new javax.swing.JComboBox<>();
 
 		setBackground(new java.awt.Color(255, 255, 255));
 
@@ -153,7 +155,7 @@ public class Usuarios extends javax.swing.JPanel {
 		jTextFieldNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextField1ActionPerformed(evt);
+				// jTextField1ActionPerformed(evt);
 			}
 		});
 
@@ -171,24 +173,39 @@ public class Usuarios extends javax.swing.JPanel {
 		jButtonBuscar.setText("Documento");
 		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton2ActionPerformed(evt);
+				// jButton2ActionPerformed(evt);
 			}
 		});
 
 		jButtonGuardar.setText("Guardar");
 
 		jButtonActualizar.setText("Actualizar");
+		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonActualizarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 
 		jButtonEliminar.setText("Eliminar");
 
-		jComboBoxRol.setModel(
-				new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Mesero" }));
+		jComboBoxRestaurante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Mesero" }));
 
 		jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel5.setText("Restaurante");
 
-		jComboBoxRestaurante.setModel(
-				new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+		jComboBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Restaurante 1" }));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -201,11 +218,9 @@ public class Usuarios extends javax.swing.JPanel {
 												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 										.addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING, false)
-												.addGroup(layout.createSequentialGroup().addGap(71, 71, 71)
-														.addGroup(layout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING,
-																		false)
+												.addGroup(layout.createSequentialGroup().addGap(71, 71, 71).addGroup(
+														layout.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING, false)
 																.addGroup(layout.createSequentialGroup().addGroup(layout
 																		.createParallelGroup(
 																				javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,8 +228,10 @@ public class Usuarios extends javax.swing.JPanel {
 																		.addGap(44, 44, 44).addGroup(
 																				layout.createParallelGroup(
 																						javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(jTextFieldTelefono)
-																						.addComponent(jTextFieldNombre)))
+																						.addComponent(
+																								jTextFieldTelefono)
+																						.addComponent(
+																								jTextFieldNombre)))
 																.addGroup(layout.createSequentialGroup()
 																		.addGroup(layout.createParallelGroup(
 																				javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +245,7 @@ public class Usuarios extends javax.swing.JPanel {
 																						javax.swing.GroupLayout.PREFERRED_SIZE,
 																						340,
 																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(jComboBoxRol,
+																				.addComponent(jComboBoxRestaurante,
 																						javax.swing.GroupLayout.PREFERRED_SIZE,
 																						340,
 																						javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -236,7 +253,7 @@ public class Usuarios extends javax.swing.JPanel {
 														.addGroup(layout
 																.createParallelGroup(
 																		javax.swing.GroupLayout.Alignment.LEADING)
-																.addComponent(jComboBoxRestaurante, 0,
+																.addComponent(jComboBoxRol, 0,
 																		javax.swing.GroupLayout.DEFAULT_SIZE,
 																		Short.MAX_VALUE)
 																.addGroup(layout.createParallelGroup(
@@ -251,9 +268,10 @@ public class Usuarios extends javax.swing.JPanel {
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				Short.MAX_VALUE))))
-												.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup().addContainerGap().addComponent(
-																jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 155,
+												.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+														.createSequentialGroup().addContainerGap()
+														.addComponent(jButtonActualizar,
+																javax.swing.GroupLayout.PREFERRED_SIZE, 155,
 																javax.swing.GroupLayout.PREFERRED_SIZE)))
 												.addGroup(layout
 														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,78 +291,101 @@ public class Usuarios extends javax.swing.JPanel {
 																		javax.swing.GroupLayout.PREFERRED_SIZE)))
 												.addGap(0, 200, Short.MAX_VALUE)))
 								.addContainerGap()));
-		layout.setVerticalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								layout.createSequentialGroup().addContainerGap().addComponent(jLabel7)
-										.addGap(36, 36, 36)
-										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel1)
-												.addComponent(jTextFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(20, 20, 20)
-										.addGroup(layout
-												.createParallelGroup(
-														javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(layout.createSequentialGroup().addGroup(layout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jTextFieldTelefono,
-																javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLabel2)).addGap(18, 18, 18)
-														.addGroup(layout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(jTextFieldEmail,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addComponent(jLabel3))
-														.addGap(18, 18, 18)
-														.addGroup(layout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(jLabel4).addComponent(jComboBoxRol,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24,
-																Short.MAX_VALUE)
-														.addGroup(layout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(jLabel5).addComponent(jComboBoxRestaurante,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGap(18, 18, 18)
-														.addGroup(layout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING)
-																.addComponent(jButtonActualizar,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 36,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addComponent(jButtonGuardar,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 36,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-														.addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE,
-																36, javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-														Short.MAX_VALUE))
-										.addGap(65, 65, 65)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(jLabel7).addGap(36, 36, 36)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel1)
+								.addComponent(jTextFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(
+										jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(20, 20, 20)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+								.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(jLabel2))
+								.addGap(18, 18, 18)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(jLabel3))
+								.addGap(18, 18, 18)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(jLabel4)
+										.addComponent(jComboBoxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24,
+										Short.MAX_VALUE)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(jLabel5)
+										.addComponent(jComboBoxRol, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGap(18, 18, 18)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+						.addGap(65, 65, 65)));
 	}// </editor-fold>
 
-	private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
+	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		ControlUsuario cu = new ControlUsuario();
+		Usuario usuario = new Usuario();
+
+		int fila = JTableUsuarios.getSelectedRow();
+
+		String id2 = jLabel2.getText();
+		//String id1 = JTableUsuarios.getValueAt(fila, 0).toString();
+		int id = Integer.parseInt(id2);
+		String documento = jTextFieldDocumento.getText();
+		String nombre = jTextFieldNombre.getText();
+		String telefono = jTextFieldTelefono.getText();
+		String email = jTextFieldEmail.getText();
+		String rol = jComboBoxRol.getSelectedItem().toString();
+		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+		
+
+		usuario.setAll(id, documento, nombre, telefono, email, rol, restaurante);
+
+		System.out.println(usuario.toString());
+
+		if (cu.updateUsuario(usuario)) {
+
+			modeloUsuarios.setRowCount(0);
+
+			try {
+				llenarListaUsuarios();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			setDatosUsuarios();
+			JTableUsuarios.setEnabled(false);
+			jTextFieldDocumento.setText("");
+			jTextFieldNombre.setText("");
+			jTextFieldTelefono.setText("");
+			jTextFieldEmail.setText("");
+			
+			
+
+		}
+
 	}
 
 	// Variables declaration - do not modify
@@ -352,8 +393,8 @@ public class Usuarios extends javax.swing.JPanel {
 	private javax.swing.JButton jButtonBuscar;
 	private javax.swing.JButton jButtonActualizar;
 	private javax.swing.JButton jButtonEliminar;
-	private javax.swing.JComboBox<String> jComboBoxRol;
 	private javax.swing.JComboBox<String> jComboBoxRestaurante;
+	private javax.swing.JComboBox<String> jComboBoxRol;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;
