@@ -36,6 +36,26 @@ public class Impl_Cliente extends UnicastRemoteObject implements ICliente {
 		}
 		return cliente;
 	}
+	
+	public boolean buscarClienteDoc(String documento) throws RemoteException {
+		boolean buscar = true;
+		
+		Cliente cliente = new Cliente(documento);
+		// crear los DAO a manipular
+		ClienteDao clienteDao = new ClienteDao();
+
+		try {
+			clienteDao.load(getConnection(), cliente);
+		} catch (SQLException e) {
+			cliente = null;
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			cliente = null;
+			e.printStackTrace();
+		}
+		return buscar;
+	}
+	
 
 	@Override
 	public Cliente buscarClienteId(int id) throws RemoteException {

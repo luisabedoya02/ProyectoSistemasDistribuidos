@@ -28,6 +28,18 @@ public class ControlCliente {
 		return c;
 	}
 	
+	public boolean searchClienteDoc(String codigoCliente) {
+		boolean buscar = true;
+		try {
+			if (!ic.buscarClienteDoc(codigoCliente))
+				buscar = false;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			buscar = false;
+		}
+		return buscar;
+	}
+	
 	public Cliente searchCliente2(int idCliente) {
 		try {
 			c = ic.buscarClienteId(idCliente);

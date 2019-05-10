@@ -47,6 +47,7 @@ public class ClienteVista extends javax.swing.JFrame {
 		grupoBotones.add(tres);
 		grupoBotones.add(cuatro);
 		grupoBotones.add(cinco);
+		
 
 		setModeloTablaMesas();
 		llenarListaMesas();
@@ -59,8 +60,6 @@ public class ClienteVista extends javax.swing.JFrame {
 		setModeloTablaPedidos();
 		llenarListaPedidos();
 		setDatosPedidos();
-
-		
 
 		setEventoMouseClicked(jTableClientes);
 		setEventoMouseClicked(jTablePedidos);
@@ -91,12 +90,17 @@ public class ClienteVista extends javax.swing.JFrame {
 	}
 
 	public void setModeloTablaClientes() {
-		String cabeceras[] = { "Documento", "Nombre", "Teléfono", "E-mail", "Valoración" };
+		String cabeceras[] = { "Documento", "Nombre", "Telï¿½fono", "E-mail", "Valoraciï¿½n" };
 		modeloClientes.setColumnIdentifiers(cabeceras);
 		jTableClientes.setModel(modeloClientes);
 	}
 
 	public void llenarListaClientes() throws RemoteException, NotBoundException {
+
+		listaClientes = (ArrayList<Cliente>) cc.loadAll();
+	}
+
+	public void llenarListaCliente() throws RemoteException, NotBoundException {
 
 		listaClientes = (ArrayList<Cliente>) cc.loadAll();
 	}
@@ -145,7 +149,7 @@ public class ClienteVista extends javax.swing.JFrame {
 	}
 
 	public void setModeloTablaPedidosDetalles() {
-		String cabeceras[] = { "Id", "Cantidad", "Producto", "Especificación", "Precio" };
+		String cabeceras[] = { "Id", "Cantidad", "Producto", "Especificaciï¿½n", "Precio" };
 		modeloPedidosDetalles.setColumnIdentifiers(cabeceras);
 		jTablePedidosDetalles.setModel(modeloPedidosDetalles);
 	}
@@ -153,14 +157,13 @@ public class ClienteVista extends javax.swing.JFrame {
 	public void llenarListaPedidosDetalles(int idPedido) throws RemoteException, NotBoundException {
 		ControlPedidoDetalle cpd = new ControlPedidoDetalle();
 		listaPedidosDetalles = (ArrayList<Pedido_detalle>) cpd.loadAllId(idPedido);
-		System.out.println("PRUEBA"+idPedido);
-		
+		System.out.println("PRUEBA" + idPedido);
+
 	}
 
 	public void setDatosPedidosDetalles() {
 		Object[] pedidos = new Object[modeloPedidosDetalles.getColumnCount()];
-		
-		
+
 		for (Pedido_detalle pedidoDetalle : listaPedidosDetalles) {
 			pedidos[0] = pedidoDetalle.getId_pedido();
 			pedidos[1] = pedidoDetalle.getCantidad();
@@ -187,12 +190,10 @@ public class ClienteVista extends javax.swing.JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
 	}
-	
-	
 
 	private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {
 		int fila = jTableClientes.rowAtPoint(evt.getPoint());
@@ -206,21 +207,21 @@ public class ClienteVista extends javax.swing.JFrame {
 			jLabelNombre.setText(nombre);
 		}
 	}
-	
+
 	private void jTablePedidosMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException, NotBoundException {
 		int fila = jTableClientes.rowAtPoint(evt.getPoint());
 		if (fila < 0) {
 			JOptionPane.showMessageDialog(null, "Selecciona una fila");
 		} else {
-			
+
 			String idPedido1 = jTablePedidos.getValueAt(fila, 0).toString();
 			int idPedido = Integer.parseInt(idPedido1);
-			
+
 			ControlPedido cp = new ControlPedido();
 			Pedido pedido = new Pedido();
 			pedido = cp.searchPedidoId(idPedido);
 			System.out.println(pedido);
-			
+
 			setModeloTablaPedidosDetalles();
 			modeloPedidosDetalles.setRowCount(0);
 			try {
@@ -257,8 +258,8 @@ public class ClienteVista extends javax.swing.JFrame {
 		jPanel3 = new javax.swing.JPanel();
 		jScrollPane4 = new javax.swing.JScrollPane();
 		jTableClientes = new javax.swing.JTable();
-		jButton1 = new javax.swing.JButton();
-		jTextFieldDocumento = new javax.swing.JTextField();
+		jButtonBuscar = new javax.swing.JButton();
+		jTextFieldDocumento = new javax.swing.JTextField("");
 		jLabel4 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
@@ -304,7 +305,7 @@ public class ClienteVista extends javax.swing.JFrame {
 
 		jTabbedPane1.addTab("Mesas", jPanel1);
 
-		jLabel2.setText("Últimos pedidos");
+		jLabel2.setText("ï¿½ltimos pedidos");
 
 		jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
@@ -314,7 +315,7 @@ public class ClienteVista extends javax.swing.JFrame {
 		jTablePedidosDetalles.setModel(new javax.swing.table.DefaultTableModel(
 				new Object[][] { { null, null, null, null }, { null, null, null, null }, { null, null, null, null },
 						{ null, null, null, null } },
-				new String[] { "Cantidad", "Producto", "Especificación", "Precio" }));
+				new String[] { "Cantidad", "Producto", "Especificaciï¿½n", "Precio" }));
 		jScrollPane3.setViewportView(jTablePedidosDetalles);
 
 		jLabel3.setText("Detalle del pedido");
@@ -345,17 +346,25 @@ public class ClienteVista extends javax.swing.JFrame {
 		jTabbedPane1.addTab("Pedidos", jPanel2);
 
 		jTableClientes.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
-				new String[] { "Documento", "Nombre", "Teléfono", "E - Mail" }));
+				new String[] { "Documento", "Nombre", "Telï¿½fono", "E - Mail" }));
 		jScrollPane4.setViewportView(jTableClientes);
 
-		jButton1.setText("Buscar");
-		jButton1.addActionListener(new java.awt.event.ActionListener() {
+		jButtonBuscar.setText("Buscar");
+		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton1ActionPerformed(evt);
+				try {
+					jButtonBuscarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
-		jTextFieldDocumento.setText("jTextFieldDocumento");
+		jTextFieldDocumento.setText("");
 
 		jLabel4.setText("Documento:");
 
@@ -399,7 +408,7 @@ public class ClienteVista extends javax.swing.JFrame {
 										.addComponent(jTextFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 107,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(jButton1)))
+										.addComponent(jButtonBuscar)))
 						.addGap(48, 48, 48)
 						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(jPanel3Layout.createSequentialGroup()
@@ -431,32 +440,31 @@ public class ClienteVista extends javax.swing.JFrame {
 																javax.swing.GroupLayout.PREFERRED_SIZE))))
 								.addComponent(jButtonValorar))
 						.addContainerGap(139, Short.MAX_VALUE)));
-		jPanel3Layout
-				.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(jPanel3Layout.createSequentialGroup().addGap(53, 53, 53).addGroup(jPanel3Layout
-								.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jButton1)
+		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel3Layout.createSequentialGroup().addGap(53, 53, 53)
+						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jButtonBuscar)
 								.addComponent(jTextFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addComponent(jLabel4))
-								.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(jPanel3Layout.createSequentialGroup()
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-												.addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 371,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(jPanel3Layout.createSequentialGroup().addGap(27, 27, 27)
-												.addGroup(jPanel3Layout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel5).addComponent(jLabel6)
-														.addComponent(jLabelNombre))
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-												.addGroup(jPanel3Layout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel7).addComponent(uno).addComponent(dos)
-														.addComponent(tres).addComponent(cuatro).addComponent(cinco))
-												.addGap(26, 26, 26).addComponent(jButtonValorar)))
-								.addContainerGap(163, Short.MAX_VALUE)));
+						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(jPanel3Layout.createSequentialGroup()
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 371,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGroup(jPanel3Layout.createSequentialGroup().addGap(27, 27, 27)
+										.addGroup(jPanel3Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(jLabel5).addComponent(jLabel6).addComponent(jLabelNombre))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(jPanel3Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(jLabel7).addComponent(uno).addComponent(dos)
+												.addComponent(tres).addComponent(cuatro).addComponent(cinco))
+										.addGap(26, 26, 26).addComponent(jButtonValorar)))
+						.addContainerGap(163, Short.MAX_VALUE)));
 
-		jTabbedPane1.addTab("Valoración Cliente", jPanel3);
+		jTabbedPane1.addTab("Valoraciï¿½n Cliente", jPanel3);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -471,8 +479,33 @@ public class ClienteVista extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>
 
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+	private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException, NotBoundException {
+
+		String documento = jTextFieldDocumento.getText();
+		c.setDocumento(documento);
+		
+		if (cc.searchClienteDoc(documento)) {
+			modeloClientes.setRowCount(0);
+
+			c = cc.searchCliente(documento);
+
+			Object[] clientes = new Object[modeloClientes.getColumnCount()];
+
+			clientes[0] = c.getDocumento();
+			clientes[1] = c.getNombre_completo();
+			if(clientes[1] == null) {
+				setModeloTablaClientes();
+				llenarListaClientes();
+				setDatosClientes();
+				return;
+			}
+			clientes[2] = c.getTelefono();
+			clientes[3] = c.getEmail();
+			clientes[4] = c.getValoracion();
+			modeloClientes.addRow(clientes);
+			jTableClientes.setModel(modeloClientes);
+		}
+
 	}
 
 	private void jButtonValorarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,7 +517,7 @@ public class ClienteVista extends javax.swing.JFrame {
 		String documento = jTextFieldDocumento.getText();
 		c.setDocumento(documento);
 		if (cc.updateValoracionCliente(c)) {
-			
+
 			modeloClientes.setRowCount(0);
 
 			try {
@@ -495,10 +528,9 @@ public class ClienteVista extends javax.swing.JFrame {
 			} catch (NotBoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
-			
+			}
+
 			setDatosClientes();
-			jTableClientes.setEnabled(false);
 
 		}
 
@@ -543,7 +575,7 @@ public class ClienteVista extends javax.swing.JFrame {
 
 	// Variables declaration - do not modify
 
-	private javax.swing.JButton jButton1;
+	private javax.swing.JButton jButtonBuscar;
 	private javax.swing.JButton jButtonValorar;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;

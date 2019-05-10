@@ -305,8 +305,8 @@ public class ClienteDao {
                    valueObject.setValoracion(result.getInt("valoracion"));
 
               } else {
-                    //System.out.println("Cliente Object Not Found!");
-                    throw new NotFoundException("Cliente Object Not Found!");
+                    System.out.println("documento no encontrado");
+                    
               }
           } finally {
               if (result != null)

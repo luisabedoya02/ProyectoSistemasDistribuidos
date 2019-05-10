@@ -9,6 +9,7 @@ import Modelo.Cliente;
 public interface ICliente extends Remote {
 	
 	Cliente buscarCliente(String documento) throws RemoteException;
+	boolean buscarClienteDoc(String documento) throws RemoteException;
 	Cliente buscarClienteId(int id)throws RemoteException;
 	List<Cliente> listarClientes() throws RemoteException;
 	boolean actualizarCliente(Cliente cliente) throws RemoteException;
