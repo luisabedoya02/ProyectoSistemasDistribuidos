@@ -18,6 +18,7 @@ public class ControlMesa {
 		im = (IMesa) r.lookup("Mesa");
 	}
 
+	
 	public Mesa searchMesa(String codigoMesa) {
 		try {
 			m = im.buscarMesa(codigoMesa);
