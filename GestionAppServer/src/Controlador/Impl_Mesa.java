@@ -20,6 +20,7 @@ public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public Mesa buscarMesa(String codigoMesa) throws RemoteException {
 		// crear el value object a retornar

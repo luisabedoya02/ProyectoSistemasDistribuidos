@@ -160,6 +160,7 @@ public class ClienteVista extends javax.swing.JFrame {
 	public void setDatosPedidosDetalles() {
 		Object[] pedidos = new Object[modeloPedidosDetalles.getColumnCount()];
 		
+		
 		for (Pedido_detalle pedidoDetalle : listaPedidosDetalles) {
 			pedidos[0] = pedidoDetalle.getId_pedido();
 			pedidos[1] = pedidoDetalle.getCantidad();

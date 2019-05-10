@@ -13,6 +13,7 @@ public class Menu implements Cloneable, Serializable {
 	public Menu() {
 
 	}
+	
 
 	public Menu(int idIn) {
 		this.id = idIn;
