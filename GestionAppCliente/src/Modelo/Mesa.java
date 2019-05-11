@@ -14,6 +14,7 @@ public class Mesa implements Cloneable, Serializable {
 
 	public Mesa() {
 
+		
 	}
 
 	public Mesa(String codigo_mesa) {

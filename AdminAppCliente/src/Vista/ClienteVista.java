@@ -29,6 +29,7 @@ public class ClienteVista extends javax.swing.JFrame {
 	ControlCliente cc = new ControlCliente();
 	Cliente c = new Cliente();
 	private MessageBean bm;
+	
 
 	DefaultTableModel modeloMesas = new DefaultTableModel();
 	DefaultTableModel modeloClientes = new DefaultTableModel();

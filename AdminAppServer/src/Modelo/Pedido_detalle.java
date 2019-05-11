@@ -15,6 +15,7 @@ public class Pedido_detalle implements Cloneable, Serializable {
 	private String especificaciones;
 	private Integer valoracion;
 
+	
 	public Pedido_detalle() {
 
 	}
