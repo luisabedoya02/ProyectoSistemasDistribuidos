@@ -117,7 +117,7 @@ public class Cliente implements Cloneable, Serializable {
 			return (false);
 		}
 		if (this.valoracion == null) {
-			if (valueObject.getValoracion() != null)
+			if (valueObject.getValoracion() == null)
 				return (false);
 		} else if (!this.valoracion.equals(valueObject.getValoracion())) {
 			return (false);

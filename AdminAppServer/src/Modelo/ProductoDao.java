@@ -133,7 +133,7 @@ public class ProductoDao {
 
           try {
                sql = "INSERT INTO producto ( id, nombre, precio, "
-               + "descripcion, imagen, id_categoria, "
+               + "descripcion, imagen, nombre_categoria, "
                + "id_menu) VALUES (?, ?, ?, ?, ?, ?, ?) ";
                stmt = conn.prepareStatement(sql);
 
@@ -142,7 +142,7 @@ public class ProductoDao {
                stmt.setString(3, valueObject.getPrecio()); 
                stmt.setString(4, valueObject.getDescripcion()); 
                stmt.setString(5, valueObject.getImagen()); 
-               stmt.setInt(6, valueObject.getId_categoria()); 
+               stmt.setString(6, valueObject.getNombre_categoria()); 
                stmt.setInt(7, valueObject.getId_menu()); 
 
                int rowcount = databaseUpdate(conn, stmt);
@@ -175,7 +175,7 @@ public class ProductoDao {
           throws NotFoundException, SQLException {
 
           String sql = "UPDATE producto SET nombre = ?, precio = ?, descripcion = ?, "
-               + "imagen = ?, id_categoria = ?, id_menu = ? WHERE (id = ? ) ";
+               + "imagen = ?, nombre_categoria = ?, id_menu = ? WHERE (id = ? ) ";
           PreparedStatement stmt = null;
 
           try {
@@ -184,7 +184,7 @@ public class ProductoDao {
               stmt.setString(2, valueObject.getPrecio()); 
               stmt.setString(3, valueObject.getDescripcion()); 
               stmt.setString(4, valueObject.getImagen()); 
-              stmt.setInt(5, valueObject.getId_categoria()); 
+              stmt.setString(5, valueObject.getNombre_categoria()); 
               stmt.setInt(6, valueObject.getId_menu()); 
 
               stmt.setInt(7, valueObject.getId()); 
@@ -345,9 +345,9 @@ public class ProductoDao {
               sql.append("AND imagen LIKE '").append(valueObject.getImagen()).append("%' ");
           }
 
-          if (valueObject.getId_categoria() != 0) {
+          if (valueObject.getNombre_categoria() != null) {
               if (first) { first = false; }
-              sql.append("AND id_categoria = ").append(valueObject.getId_categoria()).append(" ");
+              sql.append("AND nombre_categoria = ").append(valueObject.getNombre_categoria()).append(" ");
           }
 
           if (valueObject.getId_menu() != 0) {
@@ -420,7 +420,7 @@ public class ProductoDao {
                    valueObject.setPrecio(result.getString("precio")); 
                    valueObject.setDescripcion(result.getString("descripcion")); 
                    valueObject.setImagen(result.getString("imagen")); 
-                   valueObject.setId_categoria(result.getInt("id_categoria")); 
+                   valueObject.setNombre_categoria(result.getString("nombre_categoria")); 
                    valueObject.setId_menu(result.getInt("id_menu")); 
 
               } else {
@@ -460,7 +460,7 @@ public class ProductoDao {
                    temp.setPrecio(result.getString("precio")); 
                    temp.setDescripcion(result.getString("descripcion")); 
                    temp.setImagen(result.getString("imagen")); 
-                   temp.setId_categoria(result.getInt("id_categoria")); 
+                   temp.setNombre_categoria(result.getString("nombre_categoria")); 
                    temp.setId_menu(result.getInt("id_menu")); 
 
                    searchResults.add(temp);

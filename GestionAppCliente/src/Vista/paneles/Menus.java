@@ -16,8 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControlMenu;
 import Controlador.ControlMesa;
+import Controlador.ControlUsuario;
 import Modelo.Menu;
 import Modelo.Mesa;
+import Modelo.Usuario;
 
 
 public class Menus extends javax.swing.JPanel {
@@ -83,9 +85,9 @@ public class Menus extends javax.swing.JPanel {
 			String id = jTableMenus.getValueAt(fila, 0).toString();
 			String restaurante = jTableMenus.getValueAt(fila, 1).toString();
 			
-			jTextField1.setText(id);
-			jTextField5.setText(id);
-			jTextField2.setText(restaurante);
+			jTextFieldCodigo.setText(id);
+			jTextFieldId.setText(id);
+			jComboBoxRestaurante.setSelectedItem(restaurante);
 			
 		}
 	}
@@ -98,15 +100,16 @@ public class Menus extends javax.swing.JPanel {
 		jLabel7 = new javax.swing.JLabel();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jTableMenus = new javax.swing.JTable();
-		jButton4 = new javax.swing.JButton();
+		jButtonEliminar = new javax.swing.JButton();
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
-		jButton1 = new javax.swing.JButton();
-		jButton3 = new javax.swing.JButton();
-		jTextField5 = new javax.swing.JTextField();
-		jTextField1 = new javax.swing.JTextField();
-		jButton2 = new javax.swing.JButton();
-		jTextField2 = new javax.swing.JTextField();
+		jButtonGuardar = new javax.swing.JButton();
+		jButtonActualizar = new javax.swing.JButton();
+		jTextFieldId = new javax.swing.JTextField();
+		jTextFieldCodigo = new javax.swing.JTextField();
+		jButtonBuscar = new javax.swing.JButton();
+		jComboBoxRestaurante = new javax.swing.JComboBox<String>();
+		jComboBoxRestaurante = new javax.swing.JComboBox<>();
 
 		setBackground(new java.awt.Color(255, 255, 255));
 
@@ -125,7 +128,7 @@ public class Menus extends javax.swing.JPanel {
 						new String[] { "Title 1", "Title 2", "Title 3", "Title 4" }));
 		jScrollPane1.setViewportView(jTableMenus);
 
-		jButton4.setText("Eliminar");
+		jButtonEliminar.setText("Eliminar");
 
 		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel1.setText("Código");
@@ -133,28 +136,48 @@ public class Menus extends javax.swing.JPanel {
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel2.setText("Restaurante");
 
-		jButton1.setText("Guardar");
+		jButtonGuardar.setText("Guardar");
 
-		jButton3.setText("Actualizar");
+		jButtonActualizar.setText("Actualizar");
+		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
 
-		jTextField5.setText("jTextField5");
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonActualizarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-		jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jTextField1.addActionListener(new java.awt.event.ActionListener() {
+			}
+
+		});
+
+		jTextFieldId.setText("jTextFieldId");
+
+		jTextFieldCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+		jTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextField1ActionPerformed(evt);
 			}
 		});
 
-		jButton2.setText("Buscar");
-		jButton2.addActionListener(new java.awt.event.ActionListener() {
+		jButtonBuscar.setText("Buscar");
+		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton2ActionPerformed(evt);
 			}
 		});
 
-		jTextField2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+		jComboBoxRestaurante.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+		jComboBoxRestaurante
+		.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Restaurante 1" }));
+		
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,24 +192,24 @@ public class Menus extends javax.swing.JPanel {
 												.addComponent(jLabel1).addComponent(jLabel2))
 										.addGap(44, 44, 44)
 										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(jTextField2).addComponent(jTextField1)))
+												.addComponent(jComboBoxRestaurante).addComponent(jTextFieldCodigo)))
 								.addGroup(layout.createSequentialGroup().addGap(134, 134, 134).addGroup(
 										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-												.addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING,
+												.addComponent(jButtonEliminar, javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING,
+												.addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE, 142,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addGap(18, 18, 18)
-										.addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 135,
+										.addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135,
 												javax.swing.GroupLayout.PREFERRED_SIZE)))
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup().addGap(18, 18, 18)
-										.addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 264,
+										.addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 264,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
+										.addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGroup(layout.createSequentialGroup().addGap(18, 18, 18).addComponent(jScrollPane1,
 										javax.swing.GroupLayout.PREFERRED_SIZE, 421,
@@ -198,29 +221,29 @@ public class Menus extends javax.swing.JPanel {
 				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(layout.createSequentialGroup().addGap(177, 177, 177)
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+										.addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addComponent(jLabel1)
-										.addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
+										.addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addComponent(
-												jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
+												jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGap(20, 20, 20)
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 										.addGroup(layout.createSequentialGroup().addGroup(layout
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+												.addComponent(jComboBoxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(jLabel2)).addGap(145, 145, 145)
 												.addGroup(layout
 														.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE,
+														.addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE,
 																36, javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE,
+														.addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE,
 																36, javax.swing.GroupLayout.PREFERRED_SIZE))
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+												.addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,18 +258,59 @@ public class Menus extends javax.swing.JPanel {
 		// TODO add your handling code here:
 	}// GEN-LAST:event_jButton2ActionPerformed
 
+	
+	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+
+		ControlMenu cmenu = new ControlMenu();
+		Menu menu = new Menu();
+
+		String id2 = jTextFieldId.getText();
+		int id = Integer.parseInt(id2);
+		//String restaurante = jComboBoxRestaurante.getT;				
+		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+
+		menu.setAll(id, restaurante);
+
+		System.out.println(menu.toString());
+
+		if (cmenu.updateMenu(menu)) {
+
+			modeloMenus.setRowCount(0);
+
+			try {
+				llenarListaMenus();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			setDatosMenus();
+			jTableMenus.setEnabled(false);
+			jTextFieldCodigo.setText("");
+			jComboBoxRestaurante.setSelectedIndex(-1);
+			jTextFieldId.setText("");
+		}
+
+	}
+	
+	
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton jButton1;
-	private javax.swing.JButton jButton2;
-	private javax.swing.JButton jButton3;
-	private javax.swing.JButton jButton4;
+	private javax.swing.JButton jButtonGuardar;
+	private javax.swing.JButton jButtonBuscar;
+	private javax.swing.JButton jButtonActualizar;
+	private javax.swing.JButton jButtonEliminar;
+	private javax.swing.JComboBox<String> jComboBoxRestaurante;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel7;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable jTableMenus;
-	private javax.swing.JTextField jTextField1;
-	private javax.swing.JTextField jTextField2;
-	private javax.swing.JTextField jTextField5;
+	private javax.swing.JTextField jTextFieldCodigo;
+	//private javax.swing.JTextField jComboBoxRestaurante;
+	private javax.swing.JTextField jTextFieldId;
 	// End of variables declaration//GEN-END:variables
 }

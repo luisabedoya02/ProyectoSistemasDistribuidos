@@ -201,7 +201,8 @@ public class Usuarios extends javax.swing.JPanel {
 
 		jButtonEliminar.setText("Eliminar");
 
-		jComboBoxRestaurante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Mesero" }));
+		jComboBoxRestaurante
+				.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Mesero" }));
 
 		jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel5.setText("Restaurante");
@@ -345,10 +346,7 @@ public class Usuarios extends javax.swing.JPanel {
 		ControlUsuario cu = new ControlUsuario();
 		Usuario usuario = new Usuario();
 
-		int fila = JTableUsuarios.getSelectedRow();
-
 		String id2 = jTextFieldId.getText();
-		//String id1 = JTableUsuarios.getValueAt(fila, 0).toString();
 		int id = Integer.parseInt(id2);
 		String documento = jTextFieldDocumento.getText();
 		String nombre = jTextFieldNombre.getText();
@@ -356,7 +354,6 @@ public class Usuarios extends javax.swing.JPanel {
 		String email = jTextFieldEmail.getText();
 		String rol = jComboBoxRol.getSelectedItem().toString();
 		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
-		
 
 		usuario.setAll(id, documento, nombre, telefono, email, rol, restaurante);
 
@@ -382,9 +379,6 @@ public class Usuarios extends javax.swing.JPanel {
 			jTextFieldNombre.setText("");
 			jTextFieldTelefono.setText("");
 			jTextFieldEmail.setText("");
-			
-			
-
 		}
 
 	}
