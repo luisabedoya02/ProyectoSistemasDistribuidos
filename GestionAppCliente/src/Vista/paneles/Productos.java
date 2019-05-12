@@ -28,6 +28,7 @@ public class Productos extends javax.swing.JPanel {
 
 	public Productos() {
 		initComponents();
+		jButtonEliminar.setEnabled(false);
 
 		setModeloTablaProductos();
 		try {

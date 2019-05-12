@@ -31,6 +31,7 @@ public class Menus extends javax.swing.JPanel {
 
 	public Menus() {
 		initComponents();
+		jButtonEliminar.setEnabled(false);
 
 		setModeloTablaMenus();
 		try {

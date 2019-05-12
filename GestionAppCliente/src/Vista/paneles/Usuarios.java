@@ -212,6 +212,21 @@ public class Usuarios extends javax.swing.JPanel {
 		});
 
 		jButtonEliminar.setText("Eliminar");
+		jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+				try {
+				jButtonEliminarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		jComboBoxRestaurante
 				.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Mesero" }));
@@ -427,6 +442,39 @@ public class Usuarios extends javax.swing.JPanel {
 			jComboBoxRol.setSelectedIndex(-1);
 		}
 
+	}
+	
+	private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+		ControlUsuario cu = new ControlUsuario();
+
+		String documento = jTextFieldDocumento.getText();
+
+		u.setDocumento(documento);
+
+		if (cu.delUsuario(documento)) {
+
+			modeloUsuarios.setRowCount(0);
+
+			try {
+				llenarListaUsuarios();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			setDatosUsuarios();
+			JTableUsuarios.setEnabled(false);
+			jTextFieldDocumento.setText("");
+			jTextFieldNombre.setText("");
+			jTextFieldTelefono.setText("");
+			jTextFieldEmail.setText("");
+			jComboBoxRestaurante.setSelectedIndex(-1);
+			jComboBoxRol.setSelectedIndex(-1);
+		}
 	}
 
 	// Variables declaration - do not modify
