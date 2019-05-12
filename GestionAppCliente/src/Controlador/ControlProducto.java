@@ -27,6 +27,18 @@ public class ControlProducto {
 		}
 		return p;
 	}
+	
+	public boolean searchProductoId(int id) {
+		boolean buscar = true;
+		try {
+			if (!ip.buscarProductoID(id))
+				buscar = false;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			buscar = false;
+		}
+		return buscar;
+	}
 
 	public boolean updateProducto(Producto producto) {
 		boolean update = true;

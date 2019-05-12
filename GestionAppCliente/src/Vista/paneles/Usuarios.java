@@ -361,9 +361,6 @@ public class Usuarios extends javax.swing.JPanel {
 		if (cu.searchUsuarioDoc(documento)) {
 			System.out.println(u.toString());
 			
-			setModeloTablaUsuarios();
-			llenarListaUsuarios();
-			setDatosUsuarios();
 			modeloUsuarios.setRowCount(0);
 			u = cu.searchUsuario(documento);
 

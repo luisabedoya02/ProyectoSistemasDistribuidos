@@ -24,6 +24,7 @@ public class Productos extends javax.swing.JPanel {
 	DefaultTableModel modeloProductos = new DefaultTableModel();
 
 	ArrayList<Producto> listaProductos = new ArrayList<Producto>();
+	Producto p = new Producto();
 
 	public Productos() {
 		initComponents();
@@ -44,7 +45,7 @@ public class Productos extends javax.swing.JPanel {
 	}
 
 	public void setModeloTablaProductos() {
-		String cabeceras[] = { "Id", "Nombre", "Precio", "Descripción", "Categoría", "Menú" };
+		String cabeceras[] = { "Id", "Nombre", "Precio", "Descripciï¿½n", "Categorï¿½a", "Menï¿½" };
 		modeloProductos.setColumnIdentifiers(cabeceras);
 		jTableProductos.setModel(modeloProductos);
 	}
@@ -148,12 +149,12 @@ public class Productos extends javax.swing.JPanel {
 		jTextFieldPrecio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
 		jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jLabel3.setText("Descripción");
+		jLabel3.setText("Descripciï¿½n");
 
 		jTextFieldDescripcion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
 		jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jLabel4.setText("Categoría");
+		jLabel4.setText("Categorï¿½a");
 
 		jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(
 				new String[] { "Bebidas", "Entradas", "Plato Fuerte", "Hamburguesas" }));
@@ -175,6 +176,20 @@ public class Productos extends javax.swing.JPanel {
 		jTextFieldId.setText("jTextFieldId");
 
 		jButtonBuscar.setText("Buscar");
+		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonBuscarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		jButtonActualizar.setText("Actualizar");
 		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -310,12 +325,52 @@ public class Productos extends javax.swing.JPanel {
 	private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField1ActionPerformed
 		// TODO add your handling code here:
 	}// GEN-LAST:event_jTextField1ActionPerformed
+	
+	
+	private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+
+		String id = jTextFieldId.getText();
+		int Id = Integer.parseInt(id);
+		
+		ControlProducto cp = new ControlProducto();
+		
+		if (cp.searchProductoId(Id)) {
+			System.out.println(p.toString());
+			
+			
+			modeloProductos.setRowCount(0);
+			p = cp.searchProducto(Id);
+
+			Object[] productos = new Object[modeloProductos.getColumnCount()];
+			
+			productos[0] = p.getId();
+			
+			productos[1] = p.getNombre();
+			if(productos[1] == null) {
+				setModeloTablaProductos();
+				llenarListaProductos();
+				setDatosProductos();
+				return;
+			}
+			
+			productos[2] = p.getPrecio();
+			
+			productos[3] = p.getNombre_categoria();
+			productos[4] = p.getId_menu();
+			modeloProductos.addRow(productos);
+			jTableProductos.setModel(modeloProductos);
+		}
+
+	}
+	
+	
 
 	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
 
 		ControlProducto cp = new ControlProducto();
-		Producto producto = new Producto();
+		
 
 		String id2 = jTextFieldId.getText();
 		int id = Integer.parseInt(id2);
@@ -326,11 +381,11 @@ public class Productos extends javax.swing.JPanel {
 		String menu1 = jComboBoxMenu.getSelectedItem().toString();
 		int menu = Integer.parseInt(menu1);
 
-		producto.setAll(id, nombre, precio, descripcion, null, categoria, menu);
+		p.setAll(id, nombre, precio, descripcion, null, categoria, menu);
 
-		System.out.println(producto.toString());
+		System.out.println(p.toString());
 
-		if (cp.updateProducto(producto)) {
+		if (cp.updateProducto(p)) {
 
 			modeloProductos.setRowCount(0);
 

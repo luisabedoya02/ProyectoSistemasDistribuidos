@@ -11,6 +11,8 @@ import Interfaces.IProducto;
 import Modelo.NotFoundException;
 import Modelo.Producto;
 import Modelo.ProductoDao;
+import Modelo.Usuario;
+import Modelo.UsuarioDao;
 
 public class Impl_Producto extends UnicastRemoteObject implements IProducto {
 	
@@ -35,6 +37,26 @@ public class Impl_Producto extends UnicastRemoteObject implements IProducto {
 			e.printStackTrace();
 		}
 		return producto;
+	}
+	
+	@Override
+	public boolean buscarProductoID(int id) throws RemoteException {
+		boolean buscar = true;
+
+		Producto producto = new Producto(id);
+		// crear los DAO a manipular
+		ProductoDao productoDao = new ProductoDao();
+
+		try {
+			productoDao.load(getConnection(), producto);
+		} catch (SQLException e) {
+			producto = null;
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			producto = null;
+			e.printStackTrace();
+		}
+		return buscar;
 	}
 
 	public List<Producto> listarProductos() throws RemoteException {
@@ -120,4 +142,6 @@ public class Impl_Producto extends UnicastRemoteObject implements IProducto {
 		return conn;
 
 	}
+
+	
 }

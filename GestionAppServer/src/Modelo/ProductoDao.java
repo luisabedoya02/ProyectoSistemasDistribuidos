@@ -424,8 +424,8 @@ public class ProductoDao {
                    valueObject.setId_menu(result.getInt("id_menu")); 
 
               } else {
-                    //System.out.println("Producto Object Not Found!");
-                    throw new NotFoundException("Producto Object Not Found!");
+                    System.out.println("Producto no encontrado");
+                    
               }
           } finally {
               if (result != null)
