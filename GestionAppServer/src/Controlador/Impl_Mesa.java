@@ -12,6 +12,8 @@ import Interfaces.IMesa;
 import Modelo.Mesa;
 import Modelo.MesaDao;
 import Modelo.NotFoundException;
+import Modelo.Producto;
+import Modelo.ProductoDao;
 
 @SuppressWarnings("serial")
 public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
@@ -39,6 +41,27 @@ public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
 			e.printStackTrace();
 		}
 		return mesa;
+	}
+	
+
+	@Override
+	public boolean buscarMesaID(String id) throws RemoteException {
+		boolean buscar = true;
+
+		Mesa mesa = new Mesa(id);
+		// crear los DAO a manipular
+		MesaDao productoDao = new MesaDao();
+
+		try {
+			productoDao.load(getConnection(), mesa);
+		} catch (SQLException e) {
+			mesa = null;
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			mesa = null;
+			e.printStackTrace();
+		}
+		return buscar;
 	}
 
 	public List<Mesa> listarMesas() throws RemoteException {
@@ -124,4 +147,6 @@ public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
 		return conn;
 
 	}
+
+
 }

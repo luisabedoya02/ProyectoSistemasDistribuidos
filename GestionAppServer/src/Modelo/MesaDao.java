@@ -236,8 +236,8 @@ public class MesaDao implements Serializable {
 				valueObject.setNombre_restaurante(result.getString("nombre_restaurante"));;
 
 			} else {
-				// System.out.println("Mesa Object Not Found!");
-				throw new NotFoundException("Mesa Object Not Found!");
+				 System.out.println("Mesa no encotrada");
+				
 			}
 		} finally {
 			if (result != null)

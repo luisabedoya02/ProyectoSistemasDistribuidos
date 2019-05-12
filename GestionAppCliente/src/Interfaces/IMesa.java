@@ -8,6 +8,7 @@ import Modelo.Mesa;
 
 public interface IMesa extends Remote {
 	Mesa buscarMesa(String codigoMesa) throws RemoteException;
+	boolean buscarMesaID(String id) throws RemoteException;
 	List<Mesa> listarMesas() throws RemoteException;
 	boolean actualizarMesa(Mesa mesa) throws RemoteException;
 	boolean eliminarMesa(String codigoMesa) throws RemoteException;

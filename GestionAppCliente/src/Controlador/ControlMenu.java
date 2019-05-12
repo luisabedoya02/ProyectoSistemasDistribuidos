@@ -27,6 +27,19 @@ public class ControlMenu {
 		}
 		return menu;
 	}
+	
+	public boolean searchMenuId(int id) {
+		boolean buscar = true;
+		try {
+			if (!imenu.buscarMenuID(id))
+				buscar = false;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			buscar = false;
+		}
+		return buscar;
+	}
+	
 
 	public boolean updateMenu(Menu menu) {
 		boolean update = true;

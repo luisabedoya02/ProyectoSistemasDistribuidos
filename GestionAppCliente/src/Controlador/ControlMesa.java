@@ -28,6 +28,18 @@ public class ControlMesa {
 		}
 		return m;
 	}
+	
+	public boolean searchMesaId(String id) {
+		boolean buscar = true;
+		try {
+			if (!im.buscarMesaID(id))
+				buscar = false;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			buscar = false;
+		}
+		return buscar;
+	}
 
 	public boolean updateMesa(Mesa mesa) {
 		boolean update = true;

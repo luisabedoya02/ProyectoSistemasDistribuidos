@@ -11,6 +11,8 @@ import Interfaces.IMenu;
 import Modelo.Menu;
 import Modelo.MenuDao;
 import Modelo.NotFoundException;
+import Modelo.Producto;
+import Modelo.ProductoDao;
 
 @SuppressWarnings("serial")
 public class Impl_Menu extends UnicastRemoteObject implements IMenu {
@@ -36,6 +38,26 @@ public class Impl_Menu extends UnicastRemoteObject implements IMenu {
 			e.printStackTrace();
 		}
 		return menu;
+	}
+	
+	@Override
+	public boolean buscarMenuID(int id) throws RemoteException {
+		boolean buscar = true;
+
+		Menu menu = new Menu(id);
+		// crear los DAO a manipular
+		MenuDao menuDao = new MenuDao();
+
+		try {
+			menuDao.load(getConnection(), menu);
+		} catch (SQLException e) {
+			menu = null;
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			menu = null;
+			e.printStackTrace();
+		}
+		return buscar;
 	}
 
 	public List<Menu> listarMenus() throws RemoteException {

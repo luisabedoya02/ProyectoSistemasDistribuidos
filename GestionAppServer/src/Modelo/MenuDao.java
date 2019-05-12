@@ -214,8 +214,8 @@ public class MenuDao {
 				valueObject.setId(result.getInt("id"));
 				valueObject.setNombre_restaurante(result.getString("nombre_restaurante"));
 			} else {
-				// System.out.println("Menu Object Not Found!");
-				throw new NotFoundException("Menu Object Not Found!");
+				 System.out.println("Menu no encontrado");
+				
 			}
 		} finally {
 			if (result != null)

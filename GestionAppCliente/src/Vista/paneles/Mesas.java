@@ -15,8 +15,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Controlador.ControlMesa;
+import Controlador.ControlProducto;
 import Controlador.ControlUsuario;
 import Modelo.Mesa;
+import Modelo.Producto;
 import Modelo.Usuario;
 
 /**
@@ -28,6 +30,8 @@ public class Mesas extends javax.swing.JPanel {
 	DefaultTableModel modeloMesas = new DefaultTableModel();
 	
 	ArrayList<Mesa> listaMesas = new ArrayList<Mesa>();
+	
+	Mesa m = new Mesa();
 	
     public Mesas() throws RemoteException, NotBoundException {
         initComponents();
@@ -98,7 +102,7 @@ public class Mesas extends javax.swing.JPanel {
 
         jLabel7 = new javax.swing.JLabel();
         jTextFieldId = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jButtonBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMesas = new javax.swing.JTable();
         jButtonGuaradar = new javax.swing.JButton();
@@ -119,14 +123,23 @@ public class Mesas extends javax.swing.JPanel {
         //jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/chat.png"))); // NOI18N
         jLabel7.setText("Mesas");
 
-        jTextFieldId.setText("jTextFieldId");
+        jTextFieldId.setText("");
 
-        jButton2.setText("Buscar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonBuscarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
 
         jTableMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,7 +178,7 @@ public class Mesas extends javax.swing.JPanel {
         jButtonEliminar.setText("Eliminar");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Código");
+        jLabel1.setText("Cï¿½digo");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Estado");
@@ -227,7 +240,7 @@ public class Mesas extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -243,7 +256,7 @@ public class Mesas extends javax.swing.JPanel {
                     .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -265,20 +278,52 @@ public class Mesas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+    
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {  
+    	
+    	String id = jTextFieldId.getText();
+		
+		
+		ControlMesa cm = new ControlMesa();
+		
+		if (cm.searchMesaId(id)) {
+			System.out.println(m.toString());
+			
+			
+			modeloMesas.setRowCount(0);
+			m = cm.searchMesa(id);
+
+			Object[] mesas = new Object[modeloMesas.getColumnCount()];
+			
+			mesas[0] = m.getId();
+			if(mesas[0].equals(0)) {
+				setModeloTablaMesas();
+				llenarListaMesas();
+				setDatosMesas();
+				return;
+			}
+			
+			mesas[1] = m.getCodigo_mesa();
+				
+			mesas[2] = m.getEstado();	
+			mesas[3] = m.getNombre_restaurante();
+			modeloMesas.addRow(mesas);
+			jTableMesas.setModel(modeloMesas);
+		}
+		
+	}
 
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
 
 		ControlMesa cmesa = new ControlMesa();
-		Mesa mesa = new Mesa();
 
 		String id2 = jTextFieldId.getText();
 		int id = Integer.parseInt(id2);
@@ -286,11 +331,11 @@ public class Mesas extends javax.swing.JPanel {
 		String estado = jComboBoxEstado.getSelectedItem().toString();		
 		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
 
-		mesa.setAll(id, codigoMesa, estado, restaurante);
+		m.setAll(id, codigoMesa, estado, restaurante);
 
-		System.out.println(mesa.toString());
+		System.out.println(m.toString());
 
-		if (cmesa.updateMesa(mesa)) {
+		if (cmesa.updateMesa(m)) {
 
 			modeloMesas.setRowCount(0);
 
@@ -316,7 +361,7 @@ public class Mesas extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonGuaradar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBoxRestaurante;

@@ -175,7 +175,7 @@ public class Productos extends javax.swing.JPanel {
 
 		jButtonGuardar.setText("Guardar");
 
-		jTextFieldId.setText("jTextFieldId");
+		jTextFieldId.setText("");
 
 		jButtonBuscar.setText("Buscar");
 		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {

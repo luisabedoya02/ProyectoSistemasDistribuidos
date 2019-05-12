@@ -27,6 +27,7 @@ public class Menus extends javax.swing.JPanel {
 	DefaultTableModel modeloMenus = new DefaultTableModel();
 
 	ArrayList<Menu> listaMenus = new ArrayList<Menu>();
+	Menu m = new Menu();
 
 	public Menus() {
 		initComponents();
@@ -119,7 +120,7 @@ public class Menus extends javax.swing.JPanel {
 		// jLabel7.setIcon(new
 		// javax.swing.ImageIcon(getClass().getResource("/img1/feeedback.png"))); //
 		// NOI18N
-		jLabel7.setText("Menú");
+		jLabel7.setText("Menï¿½");
 
 		jTableMenus.setModel(
 				new javax.swing.table.DefaultTableModel(
@@ -131,7 +132,7 @@ public class Menus extends javax.swing.JPanel {
 		jButtonEliminar.setText("Eliminar");
 
 		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jLabel1.setText("Código");
+		jLabel1.setText("Cï¿½digo");
 
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel2.setText("Restaurante");
@@ -157,7 +158,7 @@ public class Menus extends javax.swing.JPanel {
 
 		});
 
-		jTextFieldId.setText("jTextFieldId");
+		jTextFieldId.setText("");
 
 		jTextFieldCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
@@ -167,9 +168,18 @@ public class Menus extends javax.swing.JPanel {
 		});
 
 		jButtonBuscar.setText("Buscar");
-		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton2ActionPerformed(evt);
+				try {
+					jButtonBuscarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 
@@ -254,27 +264,53 @@ public class Menus extends javax.swing.JPanel {
 		// TODO add your handling code here:
 	}// GEN-LAST:event_jTextField1ActionPerformed
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_jButton2ActionPerformed
+	private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {  
+    	
+    	String id = jTextFieldId.getText();
+		int Id = Integer.parseInt(id);
+		
+		ControlMenu cm = new ControlMenu();
+		
+		if (cm.searchMenuId(Id)) {
+			System.out.println(m.toString());
+			
+			modeloMenus.setRowCount(0);
+			m = cm.searchMenu(Id);
+
+			Object[] menus = new Object[modeloMenus.getColumnCount()];
+			
+			menus[0] = m.getId();
+					
+			menus[1] = m.getNombre_restaurante();
+			if(menus[1]==null) {
+				setModeloTablaMenus();
+				llenarListaMenus();
+				setDatosMenus();
+				return;
+			}
+			modeloMenus.addRow(menus);
+			jTableMenus.setModel(modeloMenus);
+		}
+		
+	}
 
 	
 	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
 
 		ControlMenu cmenu = new ControlMenu();
-		Menu menu = new Menu();
 
 		String id2 = jTextFieldId.getText();
 		int id = Integer.parseInt(id2);
 		//String restaurante = jComboBoxRestaurante.getT;				
 		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
 
-		menu.setAll(id, restaurante);
+		m.setAll(id, restaurante);
 
-		System.out.println(menu.toString());
+		System.out.println(m.toString());
 
-		if (cmenu.updateMenu(menu)) {
+		if (cmenu.updateMenu(m)) {
 
 			modeloMenus.setRowCount(0);
 
