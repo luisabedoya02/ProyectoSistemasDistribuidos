@@ -267,8 +267,8 @@ public class UsuarioDao {
 				valueObject.setNombre_restaurante(result.getString("nombre_restaurante"));
 				
 			} else {
-				// System.out.println("Usuario Object Not Found!");
-				throw new NotFoundException("Usuario Object Not Found!");
+				System.out.println("Usuario no encontrado");
+				
 			}
 		} finally {
 			if (result != null)

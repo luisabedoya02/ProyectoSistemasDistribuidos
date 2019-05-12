@@ -22,10 +22,22 @@ public class ControlUsuario {
 		try {
 			u = iu.buscarUsuario(codigoUsuario);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			System.out.println("usuario no econtrado");
 			u = null;
 		}
 		return u;
+	}
+	
+	public boolean searchUsuarioDoc(String codigoCliente) {
+		boolean buscar = true;
+		try {
+			if (!iu.buscarUsuarioDoc(codigoCliente))
+				buscar = false;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			buscar = false;
+		}
+		return buscar;
 	}
 
 	public boolean updateUsuario(Usuario usuario) {

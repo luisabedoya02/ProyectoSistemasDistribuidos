@@ -30,7 +30,9 @@ public class Usuarios extends javax.swing.JPanel {
 	DefaultTableModel modeloUsuarios = new DefaultTableModel();
 
 	ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-
+	Usuario u = new Usuario();
+	
+	
 	public Usuarios() {
 		initComponents();
 
@@ -169,12 +171,21 @@ public class Usuarios extends javax.swing.JPanel {
 		}, new String[] { "Title 1", "Title 2", "Title 3", "Title 4" }));
 		jScrollPane1.setViewportView(JTableUsuarios);
 
-		jTextFieldDocumento.setText("jTextFieldDocumento");
+		jTextFieldDocumento.setText("");
 
-		jButtonBuscar.setText("Documento");
+		jButtonBuscar.setText("Buscar");
 		jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// jButton2ActionPerformed(evt);
+				try {
+					jButtonBuscarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 
@@ -340,11 +351,46 @@ public class Usuarios extends javax.swing.JPanel {
 						.addGap(65, 65, 65)));
 	}// </editor-fold>
 
+	private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+
+		String documento = jTextFieldDocumento.getText();
+		u.setDocumento(documento);
+		ControlUsuario cu = new ControlUsuario();
+		
+		if (cu.searchUsuarioDoc(documento)) {
+			System.out.println(u.toString());
+			
+			setModeloTablaUsuarios();
+			llenarListaUsuarios();
+			setDatosUsuarios();
+			modeloUsuarios.setRowCount(0);
+			u = cu.searchUsuario(documento);
+
+			Object[] usuarios = new Object[modeloUsuarios.getColumnCount()];
+			
+			usuarios[0] = u.getId();
+			usuarios[1] = u.getDocumento();
+			usuarios[2] = u.getNombre_completo();
+			if(usuarios[2] == null) {
+				setModeloTablaUsuarios();
+				llenarListaUsuarios();
+				setDatosUsuarios();
+				return;
+			}
+			usuarios[3] = u.getTelefono();
+			usuarios[4] = u.getEmail();
+			usuarios[5] = u.getNombre_rol();
+			usuarios[6] = u.getNombre_restaurante();
+			modeloUsuarios.addRow(usuarios);
+			JTableUsuarios.setModel(modeloUsuarios);
+		}
+
+	}
+
 	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
 
-		ControlUsuario cu = new ControlUsuario();
-		Usuario usuario = new Usuario();
 
 		String id2 = jTextFieldId.getText();
 		int id = Integer.parseInt(id2);
@@ -355,11 +401,11 @@ public class Usuarios extends javax.swing.JPanel {
 		String rol = jComboBoxRol.getSelectedItem().toString();
 		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
 
-		usuario.setAll(id, documento, nombre, telefono, email, rol, restaurante);
+		u.setAll(id, documento, nombre, telefono, email, rol, restaurante);
 
-		System.out.println(usuario.toString());
-
-		if (cu.updateUsuario(usuario)) {
+		System.out.println(u.toString());
+		ControlUsuario cu = new ControlUsuario();
+		if (cu.updateUsuario(u)) {
 
 			modeloUsuarios.setRowCount(0);
 

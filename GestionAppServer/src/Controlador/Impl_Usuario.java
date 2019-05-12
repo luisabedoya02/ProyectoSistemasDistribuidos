@@ -36,6 +36,29 @@ public class Impl_Usuario extends UnicastRemoteObject implements IUsuario {
 		}
 		return usuario;
 	}
+	
+	@Override
+	public boolean buscarUsuarioDoc(String documento) throws RemoteException {
+		boolean buscar = true;
+
+		Usuario usuario = new Usuario(documento);
+		// crear los DAO a manipular
+		UsuarioDao clienteDao = new UsuarioDao();
+
+		try {
+			clienteDao.load(getConnection(), usuario);
+		} catch (SQLException e) {
+			usuario = null;
+			e.printStackTrace();
+		} catch (NotFoundException e) {
+			usuario = null;
+			e.printStackTrace();
+		}
+		return buscar;
+
+	}
+	
+	
 
 	public List<Usuario> listarUsuarios() throws RemoteException {
 		List l = null;
@@ -120,4 +143,6 @@ public class Impl_Usuario extends UnicastRemoteObject implements IUsuario {
 		return conn;
 
 	}
+
+	
 }
