@@ -88,13 +88,15 @@ public class Productos extends javax.swing.JPanel {
 			String nombre = jTableProductos.getValueAt(fila, 1).toString();
 			String precio = jTableProductos.getValueAt(fila, 2).toString();
 			String descripcion = jTableProductos.getValueAt(fila, 3).toString();
-			String categoria = jTableProductos.getValueAt(fila, 3).toString();
-			String menu = jTableProductos.getValueAt(fila, 3).toString();
+			String categoria = jTableProductos.getValueAt(fila, 4).toString();
+			String menu = jTableProductos.getValueAt(fila, 5).toString();
 
 			jTextFieldId.setText(id);
 			jTextFieldNombre.setText(nombre);
 			jTextFieldPrecio.setText(precio);
 			jTextFieldDescripcion.setText(descripcion);
+			jComboBoxCategoria.setSelectedItem(categoria);
+			jComboBoxMenu.setSelectedItem(menu);
 
 		}
 	}
@@ -405,6 +407,8 @@ public class Productos extends javax.swing.JPanel {
 			jTextFieldNombre.setText("");
 			jTextFieldPrecio.setText("");
 			jTextFieldDescripcion.setText("");
+			jComboBoxCategoria.setSelectedIndex(-1);
+			jComboBoxMenu.setSelectedIndex(-1);
 
 		}
 

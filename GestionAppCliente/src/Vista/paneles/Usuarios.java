@@ -105,7 +105,8 @@ public class Usuarios extends javax.swing.JPanel {
 			jTextFieldTelefono.setText(telefono);
 			jTextFieldEmail.setText(email);
 			jTextFieldId.setText(id);
-			// jComboBoxRestaurante.add;
+			jComboBoxRestaurante.setSelectedItem(rol);
+			jComboBoxRol.setSelectedItem(restaurante);
 
 		}
 	}
@@ -422,6 +423,8 @@ public class Usuarios extends javax.swing.JPanel {
 			jTextFieldNombre.setText("");
 			jTextFieldTelefono.setText("");
 			jTextFieldEmail.setText("");
+			jComboBoxRestaurante.setSelectedIndex(-1);
+			jComboBoxRol.setSelectedIndex(-1);
 		}
 
 	}
