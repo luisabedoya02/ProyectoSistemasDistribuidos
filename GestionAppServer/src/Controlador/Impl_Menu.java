@@ -10,6 +10,7 @@ import java.util.List;
 import Interfaces.IMenu;
 import Modelo.Menu;
 import Modelo.MenuDao;
+import Modelo.MesaDao;
 import Modelo.NotFoundException;
 import Modelo.Producto;
 import Modelo.ProductoDao;
@@ -38,6 +39,19 @@ public class Impl_Menu extends UnicastRemoteObject implements IMenu {
 			e.printStackTrace();
 		}
 		return menu;
+	}
+	
+	public int conteo() throws RemoteException {
+		int cantidad = 0;
+		// crear los DAO a manipular
+		MenuDao menuDao = new MenuDao();
+
+		try {
+			cantidad = menuDao.countAll(getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cantidad;
 	}
 	
 	@Override

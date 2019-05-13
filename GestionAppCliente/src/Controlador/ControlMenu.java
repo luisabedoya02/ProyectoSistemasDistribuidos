@@ -28,6 +28,17 @@ public class ControlMenu {
 		return menu;
 	}
 	
+	public int conteo() {
+		int cont = 0;
+		try {
+			cont = imenu.conteo();
+		} catch (RemoteException e) {
+			System.out.println("usuarios 0");
+		}
+		return cont;
+		
+	}
+	
 	public boolean searchMenuId(int id) {
 		boolean buscar = true;
 		try {

@@ -43,6 +43,19 @@ public class Impl_Mesa extends UnicastRemoteObject implements IMesa {
 		return mesa;
 	}
 	
+	public int conteo() throws RemoteException {
+		int cantidad = 0;
+		// crear los DAO a manipular
+		MesaDao mesaDao = new MesaDao();
+
+		try {
+			cantidad = mesaDao.countAll(getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cantidad;
+	}
+	
 
 	@Override
 	public boolean buscarMesaID(String id) throws RemoteException {

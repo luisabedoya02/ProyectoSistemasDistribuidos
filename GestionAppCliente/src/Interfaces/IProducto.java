@@ -13,4 +13,5 @@ public interface IProducto extends Remote {
 	boolean actualizarProducto(Producto producto) throws RemoteException;
 	boolean eliminarProducto(int id) throws RemoteException;
 	boolean crearProducto(Producto producto) throws RemoteException;
+	int conteo() throws RemoteException;
 }

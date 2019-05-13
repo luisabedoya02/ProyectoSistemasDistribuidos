@@ -37,6 +37,21 @@ public class Impl_Usuario extends UnicastRemoteObject implements IUsuario {
 		return usuario;
 	}
 	
+	public int conteo() throws RemoteException {
+		int cantidad = 0;
+		// crear los DAO a manipular
+		UsuarioDao usuarioDao = new UsuarioDao();
+
+		try {
+			cantidad = usuarioDao.countAll(getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cantidad;
+	}
+	
+	
+	
 	@Override
 	public boolean buscarUsuarioDoc(String documento) throws RemoteException {
 		boolean buscar = true;

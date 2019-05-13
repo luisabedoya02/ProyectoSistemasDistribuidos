@@ -39,6 +39,19 @@ public class Impl_Producto extends UnicastRemoteObject implements IProducto {
 		return producto;
 	}
 	
+	public int conteo() throws RemoteException {
+		int cantidad = 0;
+		// crear los DAO a manipular
+		ProductoDao productoDao = new ProductoDao();
+
+		try {
+			cantidad = productoDao.countAll(getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cantidad;
+	}
+	
 	@Override
 	public boolean buscarProductoID(int id) throws RemoteException {
 		boolean buscar = true;

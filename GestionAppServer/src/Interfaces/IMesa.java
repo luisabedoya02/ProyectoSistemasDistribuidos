@@ -13,4 +13,5 @@ public interface IMesa extends Remote {
 	boolean actualizarMesa(Mesa mesa) throws RemoteException;
 	boolean eliminarMesa(String codigoMesa) throws RemoteException;
 	boolean crearMesa(Mesa mesa) throws RemoteException;
+	int conteo() throws RemoteException;
 }

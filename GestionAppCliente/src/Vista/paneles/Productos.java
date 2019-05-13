@@ -174,7 +174,24 @@ public class Productos extends javax.swing.JPanel {
 						new String[] { "Title 1", "Title 2", "Title 3", "Title 4" }));
 		jScrollPane1.setViewportView(jTableProductos);
 
-		jButtonGuardar.setText("Guardar");
+		jButtonGuardar.setText("Insertar");
+		jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonGuardarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 
 		jTextFieldId.setText("");
 
@@ -364,6 +381,44 @@ public class Productos extends javax.swing.JPanel {
 			modeloProductos.addRow(productos);
 			jTableProductos.setModel(modeloProductos);
 		}
+
+	}
+	
+	private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+		
+		int id = 0;
+		ControlProducto cp = new ControlProducto();
+		id = cp.conteo() + 1;
+	
+		String nombre = jTextFieldNombre.getText();
+		String precio = jTextFieldPrecio.getText();
+		String descripcion = jTextFieldDescripcion.getText();
+		String imagen = " ";
+		String nombre_categoria = jComboBoxCategoria.getSelectedItem().toString();
+		String menu = jComboBoxMenu.getSelectedItem().toString();
+		
+		int menu2 = Integer.parseInt(menu);
+
+		p.setAll(id, nombre, precio, descripcion, imagen, nombre_categoria, menu2);
+
+		System.out.println(p.toString());
+		
+		
+		cp.addProducto(p);
+
+		modeloProductos.setRowCount(0);
+
+		try {
+			llenarListaProductos();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setDatosProductos();
 
 	}
 	

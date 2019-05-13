@@ -35,7 +35,7 @@ public class Mesas extends javax.swing.JPanel {
 
 	public Mesas() throws RemoteException, NotBoundException {
 		initComponents();
-
+		jButtonEliminar.setEnabled(false);
 		setModeloTablaMesas();
 		llenarListaMesas();
 		setDatosMesas();
@@ -103,7 +103,7 @@ public class Mesas extends javax.swing.JPanel {
 		jButtonBuscar = new javax.swing.JButton();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jTableMesas = new javax.swing.JTable();
-		jButtonGuaradar = new javax.swing.JButton();
+		jButtonGuardar = new javax.swing.JButton();
 		jButtonActualizar = new javax.swing.JButton();
 		jButtonEliminar = new javax.swing.JButton();
 		jLabel1 = new javax.swing.JLabel();
@@ -147,7 +147,24 @@ public class Mesas extends javax.swing.JPanel {
 						new String[] { "Title 1", "Title 2", "Title 3", "Title 4" }));
 		jScrollPane1.setViewportView(jTableMesas);
 
-		jButtonGuaradar.setText("Guardar");
+		jButtonGuardar.setText("Insertar");
+		jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonGuardarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 
 		jButtonActualizar.setText("Actualizar");
 		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -231,7 +248,7 @@ public class Mesas extends javax.swing.JPanel {
 														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(jButtonGuaradar,
+												.addComponent(jButtonGuardar,
 														javax.swing.GroupLayout.Alignment.LEADING,
 														javax.swing.GroupLayout.PREFERRED_SIZE, 142,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -288,7 +305,7 @@ public class Mesas extends javax.swing.JPanel {
 														.addGroup(layout
 																.createParallelGroup(
 																		javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(jButtonGuaradar,
+																.addComponent(jButtonGuardar,
 																		javax.swing.GroupLayout.PREFERRED_SIZE, 36,
 																		javax.swing.GroupLayout.PREFERRED_SIZE)
 																.addComponent(jButtonActualizar,
@@ -340,6 +357,42 @@ public class Mesas extends javax.swing.JPanel {
 		}
 
 	}
+	
+	
+	private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+		
+		int id = 0;
+		ControlMesa cm = new ControlMesa();
+		id = cm.conteo() + 1;
+	
+		String codigo = jTextFieldCodigo.getText();
+		String estado = jComboBoxEstado.getSelectedItem().toString();
+		String nombre_restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+
+		
+		m.setAll(id, codigo, estado, nombre_restaurante);
+
+		System.out.println(m.toString());
+		
+		
+		cm.addMesa(m);
+
+		modeloMesas.setRowCount(0);
+
+		try {
+			llenarListaMesas();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setDatosMesas();
+
+	}
+	
 
 	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
@@ -411,7 +464,7 @@ public class Mesas extends javax.swing.JPanel {
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton jButtonGuaradar;
+	private javax.swing.JButton jButtonGuardar;
 	private javax.swing.JButton jButtonBuscar;
 	private javax.swing.JButton jButtonActualizar;
 	private javax.swing.JButton jButtonEliminar;

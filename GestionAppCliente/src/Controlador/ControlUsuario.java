@@ -28,6 +28,17 @@ public class ControlUsuario {
 		return u;
 	}
 	
+	public int conteo() {
+		int cont = 0;
+		try {
+			cont = iu.conteo();
+		} catch (RemoteException e) {
+			System.out.println("usuarios 0");
+		}
+		return cont;
+		
+	}
+	
 	public boolean searchUsuarioDoc(String codigoCliente) {
 		boolean buscar = true;
 		try {

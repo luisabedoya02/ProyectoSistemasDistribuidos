@@ -14,4 +14,5 @@ public interface IMenu extends Remote {
 	boolean actualizarMenu(Menu menu) throws RemoteException;
 	boolean eliminarMenu(int idMenu) throws RemoteException;
 	boolean crearMenu(Menu menu) throws RemoteException;
+	int conteo() throws RemoteException;
 }

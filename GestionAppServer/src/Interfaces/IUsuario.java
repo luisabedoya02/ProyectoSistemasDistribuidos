@@ -14,4 +14,5 @@ public interface IUsuario extends Remote {
 	boolean actualizarUsuario(Usuario usuario) throws RemoteException;
 	boolean eliminarUsuario(String documento) throws RemoteException;
 	boolean crearUsuario(Usuario usuario) throws RemoteException;
+	int conteo() throws RemoteException;
 }

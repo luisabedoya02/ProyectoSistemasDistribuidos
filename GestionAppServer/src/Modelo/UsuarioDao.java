@@ -35,6 +35,8 @@ public class UsuarioDao {
 				stmt.close();
 		}
 	}
+	
+
 
 	public List loadAll(Connection conn) throws SQLException {
 
@@ -58,9 +60,10 @@ public class UsuarioDao {
 			stmt.setInt(1, valueObject.getId());
 			stmt.setString(2, valueObject.getDocumento());
 			stmt.setString(3, valueObject.getNombre_completo());
-			stmt.setString(4, valueObject.getTelefono());					
-			stmt.setString(5, valueObject.getNombre_restaurante());
-			stmt.setString(6, valueObject.getNombre_rol());
+			stmt.setString(4, valueObject.getTelefono());	
+			stmt.setString(5, valueObject.getEmail());	
+			stmt.setString(6, valueObject.getNombre_restaurante());
+			stmt.setString(7, valueObject.getNombre_rol());
 
 			int rowcount = databaseUpdate(conn, stmt);
 			if (rowcount != 1) {
@@ -150,12 +153,13 @@ public class UsuarioDao {
 	public int countAll(Connection conn) throws SQLException {
 
 		String sql = "SELECT count(*) FROM usuario";
+		String sql2 = "SELECT id FROM usuario ORDER BY id desc limit 1";
 		PreparedStatement stmt = null;
 		ResultSet result = null;
 		int allRows = 0;
 
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql2);
 			result = stmt.executeQuery();
 
 			if (result.next())

@@ -279,7 +279,7 @@ public class ProductoDao {
      */
     public int countAll(Connection conn) throws SQLException {
 
-          String sql = "SELECT count(*) FROM producto";
+          String sql = "SELECT id FROM producto ORDER BY id desc limit 1";
           PreparedStatement stmt = null;
           ResultSet result = null;
           int allRows = 0;

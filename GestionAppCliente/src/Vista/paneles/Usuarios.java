@@ -31,8 +31,7 @@ public class Usuarios extends javax.swing.JPanel {
 
 	ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	Usuario u = new Usuario();
-	
-	
+
 	public Usuarios() {
 		initComponents();
 
@@ -190,7 +189,24 @@ public class Usuarios extends javax.swing.JPanel {
 			}
 		});
 
-		jButtonGuardar.setText("Guardar");
+		jButtonGuardar.setText("Insertar");
+		jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonGuardarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 
 		jButtonActualizar.setText("Actualizar");
 		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +232,7 @@ public class Usuarios extends javax.swing.JPanel {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
 				try {
-				jButtonEliminarActionPerformed(evt);
+					jButtonEliminarActionPerformed(evt);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -373,19 +389,19 @@ public class Usuarios extends javax.swing.JPanel {
 		String documento = jTextFieldDocumento.getText();
 		u.setDocumento(documento);
 		ControlUsuario cu = new ControlUsuario();
-		
+
 		if (cu.searchUsuarioDoc(documento)) {
 			System.out.println(u.toString());
-			
+
 			modeloUsuarios.setRowCount(0);
 			u = cu.searchUsuario(documento);
 
 			Object[] usuarios = new Object[modeloUsuarios.getColumnCount()];
-			
+
 			usuarios[0] = u.getId();
 			usuarios[1] = u.getDocumento();
 			usuarios[2] = u.getNombre_completo();
-			if(usuarios[2] == null) {
+			if (usuarios[2] == null) {
 				setModeloTablaUsuarios();
 				llenarListaUsuarios();
 				setDatosUsuarios();
@@ -401,9 +417,45 @@ public class Usuarios extends javax.swing.JPanel {
 
 	}
 
+	private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+		
+		int id = 0;
+		ControlUsuario cu = new ControlUsuario();
+		id = cu.conteo() + 1;
+		
+		
+		String documento = jTextFieldDocumento.getText();
+		String nombre = jTextFieldNombre.getText();
+		String telefono = jTextFieldTelefono.getText();
+		String email = jTextFieldEmail.getText();
+		String rol = jComboBoxRol.getSelectedItem().toString();
+		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+
+		u.setAll(id, documento, nombre, telefono, email, restaurante, rol);
+
+		System.out.println(u.toString());
+		
+		
+		cu.addUsuario(u);
+
+		modeloUsuarios.setRowCount(0);
+
+		try {
+			llenarListaUsuarios();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setDatosUsuarios();
+
+	}
+
 	private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
-
 
 		String id2 = jTextFieldId.getText();
 		int id = Integer.parseInt(id2);
@@ -443,7 +495,7 @@ public class Usuarios extends javax.swing.JPanel {
 		}
 
 	}
-	
+
 	private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException, NotBoundException {
 		ControlUsuario cu = new ControlUsuario();

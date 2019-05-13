@@ -29,6 +29,17 @@ public class ControlMesa {
 		return m;
 	}
 	
+	public int conteo() {
+		int cont = 0;
+		try {
+			cont = im.conteo();
+		} catch (RemoteException e) {
+			System.out.println("usuarios 0");
+		}
+		return cont;
+		
+	}
+	
 	public boolean searchMesaId(String id) {
 		boolean buscar = true;
 		try {

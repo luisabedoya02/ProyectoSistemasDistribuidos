@@ -137,7 +137,7 @@ public class MenuDao {
 
 	public int countAll(Connection conn) throws SQLException {
 
-		String sql = "SELECT count(*) FROM menu";
+		String sql = "SELECT id FROM menu ORDER BY id desc limit 1";
 		PreparedStatement stmt = null;
 		ResultSet result = null;
 		int allRows = 0;

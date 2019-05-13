@@ -138,7 +138,24 @@ public class Menus extends javax.swing.JPanel {
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel2.setText("Restaurante");
 
-		jButtonGuardar.setText("Guardar");
+		jButtonGuardar.setText("Insertar");
+		jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					jButtonGuardarActionPerformed(evt);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		});
 
 		jButtonActualizar.setText("Actualizar");
 		jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -294,6 +311,38 @@ public class Menus extends javax.swing.JPanel {
 			jTableMenus.setModel(modeloMenus);
 		}
 		
+	}
+	
+	private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt)
+			throws RemoteException, NotBoundException {
+		
+		int id = 0;
+		ControlMenu cm = new ControlMenu();
+		id = cm.conteo() + 1;
+	
+		String nombre_restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+
+		
+		m.setAll(id, nombre_restaurante);
+
+		System.out.println(m.toString());
+		
+		
+		cm.addMenu(m);
+
+		modeloMenus.setRowCount(0);
+
+		try {
+			llenarListaMenus();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setDatosMenus();
+
 	}
 
 	

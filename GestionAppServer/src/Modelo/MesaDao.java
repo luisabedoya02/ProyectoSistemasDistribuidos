@@ -142,7 +142,7 @@ public class MesaDao implements Serializable {
 
 	public int countAll(Connection conn) throws SQLException {
 
-		String sql = "SELECT count(*) FROM mesa";
+		String sql = "SELECT id FROM mesa ORDER BY id desc limit 1";
 		PreparedStatement stmt = null;
 		ResultSet result = null;
 		int allRows = 0;

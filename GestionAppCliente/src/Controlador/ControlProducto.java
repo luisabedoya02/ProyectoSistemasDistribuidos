@@ -28,6 +28,17 @@ public class ControlProducto {
 		return p;
 	}
 	
+	public int conteo() {
+		int cont = 0;
+		try {
+			cont = ip.conteo();
+		} catch (RemoteException e) {
+			System.out.println("usuarios 0");
+		}
+		return cont;
+		
+	}
+	
 	public boolean searchProductoId(int id) {
 		boolean buscar = true;
 		try {
