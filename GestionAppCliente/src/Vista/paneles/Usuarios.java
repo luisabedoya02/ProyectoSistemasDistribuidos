@@ -465,6 +465,7 @@ public class Usuarios extends javax.swing.JPanel {
 		String email = jTextFieldEmail.getText();
 		String rol = jComboBoxRol.getSelectedItem().toString();
 		String restaurante = jComboBoxRestaurante.getSelectedItem().toString();
+		
 
 		u.setAll(id, documento, nombre, telefono, email, rol, restaurante);
 

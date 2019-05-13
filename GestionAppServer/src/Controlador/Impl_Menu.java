@@ -41,6 +41,7 @@ public class Impl_Menu extends UnicastRemoteObject implements IMenu {
 		return menu;
 	}
 	
+	
 	public int conteo() throws RemoteException {
 		int cantidad = 0;
 		// crear los DAO a manipular
